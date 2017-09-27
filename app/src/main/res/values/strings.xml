@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Umbrella</string>
+    <string name="api_key">195106b65fb7b0b4</string>
+    <string name="zip_code">Zip Code</string>
+    <string name="search">Search</string>
+    <string name="spinner_title">Temperature Type</string>
+    <array name="temps">
+        <item>Fahrenheit</item>
+        <item>Celsius</item>
+    </array>
+</resources>
