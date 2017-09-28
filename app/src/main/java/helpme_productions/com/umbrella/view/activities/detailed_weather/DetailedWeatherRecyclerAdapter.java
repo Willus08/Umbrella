@@ -35,8 +35,25 @@ class DetailedWeatherRecyclerAdapter extends RecyclerView.Adapter<DetailedWeathe
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         List<HourlyForecast> currentDay = forecasts.get(position);
+        int highest = 0;
+        int lowest = 100;
+        for (int i = 0; i < currentDay.size(); i++) {
+            int current = Integer.parseInt(currentDay.get(i).getTemp().getEnglish());
+            if( current > highest){
+                highest = current;
+            }
+            if (current < lowest){
+                lowest = current;
+            }
+        }
         holder.day.setText(currentDay.get(0).getFCTTIME().getWeekdayName());
-        DetailedWeatherGridAdapter adapter = new DetailedWeatherGridAdapter(holder.itemView.getContext(),currentDay,tempType);
+        DetailedWeatherGridAdapter adapter = new DetailedWeatherGridAdapter(
+                holder.itemView.getContext(),
+                currentDay,
+                tempType,
+                highest,
+                lowest);
+
         holder.forcastHolder.setAdapter(adapter);
         int hieght = 400;
         if(currentDay.size() >3){

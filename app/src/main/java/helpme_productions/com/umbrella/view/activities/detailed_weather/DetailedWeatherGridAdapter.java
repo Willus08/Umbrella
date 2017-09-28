@@ -22,15 +22,15 @@ class DetailedWeatherGridAdapter extends BaseAdapter{
     private Context context;
     private List<HourlyForecast> forecasts = new ArrayList<>();
     private String tempType;
-    private int lowestTemp =100;// set initialy High so that the initialized value cant be the lowest;
-    private static int lowestTempPos = 0;
-    private int highestTemp = -100;// set initialy low so that the initialized value cant be the highest
-    private static int highestTempPos = 0;
+    private int highestTemp;
+    private int lowestTemp;
 
-    DetailedWeatherGridAdapter(Context context, List<HourlyForecast> forecasts, String tempType) {
+    DetailedWeatherGridAdapter(Context context, List<HourlyForecast> forecasts, String tempType, int highestTemp, int lowestTemp) {
         this.context = context;
         this.forecasts = forecasts;
         this.tempType = tempType;
+        this.highestTemp = highestTemp;
+        this.lowestTemp = lowestTemp;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -58,26 +58,10 @@ class DetailedWeatherGridAdapter extends BaseAdapter{
             TextView temp = gridView.findViewById(R.id.tvGridTemp);
             if(tempType.equals("f")){
                 currentTemp = Integer.parseInt(forecasts.get(position).getTemp().getEnglish());
-                if(currentTemp > highestTemp){
-                    highestTemp  = currentTemp;
-                    highestTempPos = position;
-                }
-                if(currentTemp < lowestTemp){
-                    lowestTemp = currentTemp;
-                    lowestTempPos = position;
-                }
                 String tempText = currentTemp + " F";
                 temp.setText(tempText);
             }else {
                 currentTemp = Integer.parseInt(forecasts.get(position).getTemp().getMetric());
-                if(currentTemp > highestTemp){
-                    highestTemp  = currentTemp;
-                    highestTempPos = position;
-                }
-                if(currentTemp < lowestTemp){
-                    lowestTemp = currentTemp;
-                    lowestTempPos = position;
-                }
                 String tempText = currentTemp + " C";
                 temp.setText(tempText);
             }
@@ -93,12 +77,12 @@ class DetailedWeatherGridAdapter extends BaseAdapter{
               default:
                   Glide.with(context).load(R.drawable.weather_partlycloudy).into(imageView);
           }
-            if (position == lowestTempPos){
+            if (currentTemp == lowestTemp){
                 temp.setTextColor(Color.BLUE);
                 imageView.setColorFilter(Color.BLUE);
                 time.setTextColor(Color.BLUE);
             }
-            if (position == highestTempPos){
+            if (currentTemp == highestTemp){
                 temp.setTextColor(Color.YELLOW);
                 imageView.setColorFilter(Color.YELLOW);
                 time.setTextColor(Color.YELLOW);
@@ -127,14 +111,5 @@ class DetailedWeatherGridAdapter extends BaseAdapter{
         return 0;
     }
 
-    public int getHighestTempPos(){
-        return highestTempPos;
-    }
-
-    public int getLowestTempPos(){
-
-        return lowestTempPos;
-
-    }
 
 }
