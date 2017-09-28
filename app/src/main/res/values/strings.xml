@@ -4,6 +4,7 @@
     <string name="zip_code">Zip Code</string>
     <string name="search">Search</string>
     <string name="spinner_title">Temperature Type</string>
+    <string name="change_location">Change Location</string>
     <array name="temps">
         <item>Fahrenheit</item>
         <item>Celsius</item>

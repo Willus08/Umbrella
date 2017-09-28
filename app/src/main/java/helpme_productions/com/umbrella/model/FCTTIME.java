@@ -89,7 +89,7 @@ public class FCTTIME implements Serializable
     @SerializedName("UTCDATE")
     @Expose
     private String uTCDATE;
-    private final static long serialVersionUID = -8975442058142914651L;
+    private final static long serialVersionUID = 5824567405769693134L;
 
     public String getHour() {
         return hour;

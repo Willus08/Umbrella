@@ -11,7 +11,10 @@ public class Features implements Serializable
     @SerializedName("hourly")
     @Expose
     private Integer hourly;
-    private final static long serialVersionUID = -8422821518632160936L;
+    @SerializedName("geolookup")
+    @Expose
+    private Integer geolookup;
+    private final static long serialVersionUID = -6661493372562295358L;
 
     public Integer getHourly() {
         return hourly;
@@ -19,6 +22,14 @@ public class Features implements Serializable
 
     public void setHourly(Integer hourly) {
         this.hourly = hourly;
+    }
+
+    public Integer getGeolookup() {
+        return geolookup;
+    }
+
+    public void setGeolookup(Integer geolookup) {
+        this.geolookup = geolookup;
     }
 
 }

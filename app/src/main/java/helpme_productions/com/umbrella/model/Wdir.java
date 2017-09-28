@@ -14,7 +14,7 @@ public class Wdir implements Serializable
     @SerializedName("degrees")
     @Expose
     private String degrees;
-    private final static long serialVersionUID = 737280439237868172L;
+    private final static long serialVersionUID = -1342632407269900986L;
 
     public String getDir() {
         return dir;

@@ -1,10 +1,9 @@
 
 package helpme_productions.com.umbrella.model;
 
+import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 
 public class Snow implements Serializable
 {
@@ -15,7 +14,7 @@ public class Snow implements Serializable
     @SerializedName("metric")
     @Expose
     private String metric;
-    private final static long serialVersionUID = 2794155816506714763L;
+    private final static long serialVersionUID = -5460315750497847254L;
 
     public String getEnglish() {
         return english;

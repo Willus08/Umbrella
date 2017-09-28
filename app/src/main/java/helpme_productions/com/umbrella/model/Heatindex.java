@@ -14,7 +14,7 @@ public class Heatindex implements Serializable
     @SerializedName("metric")
     @Expose
     private String metric;
-    private final static long serialVersionUID = 9205841148713300591L;
+    private final static long serialVersionUID = -8897849522362282866L;
 
     public String getEnglish() {
         return english;

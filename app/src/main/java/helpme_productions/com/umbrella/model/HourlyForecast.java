@@ -68,7 +68,7 @@ public class HourlyForecast implements Serializable
     @SerializedName("mslp")
     @Expose
     private Mslp mslp;
-    private final static long serialVersionUID = -7555496576565597460L;
+    private final static long serialVersionUID = 2122707467721844276L;
 
     public FCTTIME getFCTTIME() {
         return fCTTIME;

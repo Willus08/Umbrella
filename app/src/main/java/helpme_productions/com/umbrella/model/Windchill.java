@@ -14,7 +14,7 @@ public class Windchill implements Serializable
     @SerializedName("metric")
     @Expose
     private String metric;
-    private final static long serialVersionUID = 3415972270386970390L;
+    private final static long serialVersionUID = 6228141099009281288L;
 
     public String getEnglish() {
         return english;

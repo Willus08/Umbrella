@@ -14,7 +14,7 @@ public class Dewpoint implements Serializable
     @SerializedName("metric")
     @Expose
     private String metric;
-    private final static long serialVersionUID = -1646833999690890976L;
+    private final static long serialVersionUID = -7197548463069260845L;
 
     public String getEnglish() {
         return english;

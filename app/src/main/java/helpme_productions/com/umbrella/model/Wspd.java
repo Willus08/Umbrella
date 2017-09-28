@@ -14,7 +14,7 @@ public class Wspd implements Serializable
     @SerializedName("metric")
     @Expose
     private String metric;
-    private final static long serialVersionUID = 448746956150522660L;
+    private final static long serialVersionUID = -270652030750862316L;
 
     public String getEnglish() {
         return english;

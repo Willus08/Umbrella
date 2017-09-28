@@ -11,7 +11,8 @@ import retrofit2.http.Query;
 public class RetrofitHelper {
     private static final String BASE_URL = "http://api.wunderground.com/";
     private static final String API_KEY = "195106b65fb7b0b4";
-    private static final String SEARCH_TYPE ="hourly";
+    private static final String SEARCH_TEMP ="hourly";
+    private static final String SEARCH_LOCATION ="geolookup";
     private static Retrofit create(){
 
         return new Retrofit.Builder()
@@ -22,12 +23,16 @@ public class RetrofitHelper {
     public static Call<FullWeather> fullWeatherCall(String zip){
         Retrofit retrofit = create();
         Services services = retrofit.create(Services.class);
-        return services.getFullWeather(API_KEY,SEARCH_TYPE,zip);
+       // return services.getFullWeather(API_KEY,SEARCH_TEMP,zip);
+        return services.getFullWeatherTest();
     }
 
     interface Services{
         @GET("api/")
-        Call<FullWeather> getFullWeather(@Query("key") String key, @Query("feature") String feature, @Query("zip") String zip);
+        Call<FullWeather> getFullWeather(@Query("key") String key, @Query("feature") String feature,@Query("zip") String zip);
+
+        @GET("/api/195106b65fb7b0b4/hourly/geolookup/q/35475.json")
+        Call<FullWeather> getFullWeatherTest();
 
     }
 }

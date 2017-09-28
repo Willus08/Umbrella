@@ -5,7 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:weightSum="10"
     tools:context="helpme_productions.com.umbrella.view.activities.detailed_weather.DetailedWeather">
+    <FrameLayout
+        android:id="@+id/flCurrentTempHolder"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4">
+
+        <TextView
+            android:id="@+id/tvCityName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:layout_gravity="start|top"/>
+
+        <TextView
+            android:id="@+id/tvCurrentTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="50sp"
+            android:layout_margin="10dp"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/tvCurrentWeatherType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:layout_gravity="center_horizontal|bottom" />
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/settings"
+            android:layout_margin="10dp"
+            android:layout_gravity="top|end"
+            android:onClick="changeLocation"/>
+
+
+
+    </FrameLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvWeatherForecast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="6">
+
+    </android.support.v7.widget.RecyclerView>
 
 
 </LinearLayout>

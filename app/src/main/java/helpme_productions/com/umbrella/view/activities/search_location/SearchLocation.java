@@ -71,6 +71,6 @@ public class SearchLocation extends AppCompatActivity implements SearchLocatioCo
 
     @Override
     public void continueFromLastSearch(String zip, String tempType) {
-        
+
     }
 }

@@ -1,10 +1,9 @@
 
 package helpme_productions.com.umbrella.model;
 
+import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 
 public class Mslp implements Serializable
 {
@@ -15,7 +14,7 @@ public class Mslp implements Serializable
     @SerializedName("metric")
     @Expose
     private String metric;
-    private final static long serialVersionUID = -63533342242460299L;
+    private final static long serialVersionUID = 7526990307790320999L;
 
     public String getEnglish() {
         return english;

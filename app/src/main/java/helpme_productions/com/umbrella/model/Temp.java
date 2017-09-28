@@ -14,7 +14,7 @@ public class Temp implements Serializable
     @SerializedName("metric")
     @Expose
     private String metric;
-    private final static long serialVersionUID = -4324420346990275724L;
+    private final static long serialVersionUID = 7413014108921522364L;
 
     public String getEnglish() {
         return english;

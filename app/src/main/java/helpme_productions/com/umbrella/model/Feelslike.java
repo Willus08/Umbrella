@@ -14,7 +14,7 @@ public class Feelslike implements Serializable
     @SerializedName("metric")
     @Expose
     private String metric;
-    private final static long serialVersionUID = -2804298172263946713L;
+    private final static long serialVersionUID = 7780233068640360574L;
 
     public String getEnglish() {
         return english;
