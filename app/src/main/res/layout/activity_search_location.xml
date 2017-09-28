@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     tools:context="helpme_productions.com.umbrella.view.activities.search_location.SearchLocation">
 
     <EditText
         android:id="@+id/etSearchZipCodes"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:hint="@string/zip_code"
