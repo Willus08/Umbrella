@@ -37,7 +37,18 @@ class DetailedWeatherGridAdapter extends BaseAdapter{
             gridView = inflater.inflate(R.layout.grid_items,parent,false);
 
             TextView time = gridView.findViewById(R.id.tvGridTime);
-            time.setText(forecasts.get(position).getFCTTIME().getHour());
+            int timeInt = Integer.parseInt(forecasts.get(position).getFCTTIME().getHour());
+            String timeText;
+            if(timeInt == 0){
+                timeText = "12:00 AM";
+            }else if ( timeInt > 12){
+                timeText = timeInt-12 +":00 PM";
+            }else if(timeInt == 12 ){
+                timeText = timeInt +":00 PM";
+            }else {
+                timeText = timeInt +":00 AM";
+            }
+            time.setText(timeText);
             TextView temp = gridView.findViewById(R.id.tvGridTemp);
             if(tempType.equals("f")){
                 temp.setText(forecasts.get(position).getTemp().getEnglish());

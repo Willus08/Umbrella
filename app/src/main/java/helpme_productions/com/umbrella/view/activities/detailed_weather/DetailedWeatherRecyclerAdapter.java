@@ -15,11 +15,11 @@ import helpme_productions.com.umbrella.R;
 import helpme_productions.com.umbrella.model.HourlyForecast;
 
 class DetailedWeatherRecyclerAdapter extends RecyclerView.Adapter<DetailedWeatherRecyclerAdapter.ViewHolder> {
-    private List<List<HourlyForecast>> dailyForecasts = new ArrayList<>();
+    private List<List<HourlyForecast>> forecasts = new ArrayList<>();
     private String tempType;
 
-    DetailedWeatherRecyclerAdapter(List<List<HourlyForecast>> dailyForecasts, String tempType) {
-        this.dailyForecasts = dailyForecasts;
+    public DetailedWeatherRecyclerAdapter(List<List<HourlyForecast>> forecasts, String tempType) {
+        this.forecasts = forecasts;
         this.tempType = tempType;
     }
 
@@ -31,15 +31,15 @@ class DetailedWeatherRecyclerAdapter extends RecyclerView.Adapter<DetailedWeathe
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        List<HourlyForecast> forecast= dailyForecasts.get(position);
-        holder.day.setText(forecast.get(0).getFCTTIME().getWeekdayName());
-        holder.forcastHolder.setAdapter(new DetailedWeatherGridAdapter(holder.itemView.getContext(),forecast,tempType));
+        List<HourlyForecast> currentDay = forecasts.get(position);
+        holder.day.setText(currentDay.get(0).getFCTTIME().getWeekdayName());
+        holder.forcastHolder.setAdapter(new DetailedWeatherGridAdapter(holder.itemView.getContext(),currentDay,tempType));
 
     }
 
     @Override
     public int getItemCount() {
-        return dailyForecasts.size();
+        return forecasts.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

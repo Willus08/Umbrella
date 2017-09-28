@@ -12,7 +12,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,7 +24,6 @@ import helpme_productions.com.umbrella.model.FullWeather;
 import helpme_productions.com.umbrella.model.HourlyForecast;
 
 public class DetailedWeather extends AppCompatActivity implements DetailedWeatherContract.View {
-    private static final String TAG = "test";
     @Inject DetailedWeatherPresenter presenter;
 
     @BindView(R.id.tvCityName)
@@ -43,8 +41,7 @@ public class DetailedWeather extends AppCompatActivity implements DetailedWeathe
     DefaultItemAnimator animate;
     RecyclerView.LayoutManager layoutM;
 
-    List<List<HourlyForecast>> daysForecast = new ArrayList<>();
-    List<HourlyForecast> holder = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,24 +92,9 @@ public class DetailedWeather extends AppCompatActivity implements DetailedWeathe
 
         city.setText(cityState);
         weatherType.setText(forecasts.get(0).getCondition());
-        // takes the list of all hours and compiles it into a list of hour lists seperated by day
-        List<Integer> endOfDays = new ArrayList<>();
-        for (int i = 1; i <forecasts.size() ; i++) {
-            if(forecasts.get(i).getFCTTIME().getHour().equals("0")){
-                endOfDays.add(i);
-            }
-        }
-        for (int i = 0; i < endOfDays.size() ; i++) {
-            if(i == 0){
-                daysForecast.add(forecasts.subList(1,endOfDays.get(i)));
-            }else if (i + 1 < endOfDays.size()){
-                daysForecast.add(forecasts.subList(endOfDays.get(i-1),endOfDays.get(i)));
-            }else {
-                daysForecast.add(forecasts.subList(endOfDays.get(i),forecasts.size()));
-            }
-        }
 
-        adapter = new DetailedWeatherRecyclerAdapter(daysForecast,tempSetting);
+
+        adapter = new DetailedWeatherRecyclerAdapter(presenter.compressHoursToDays(forecasts),tempSetting);
         layoutM = new LinearLayoutManager(this);
         animate = new DefaultItemAnimator();
 
