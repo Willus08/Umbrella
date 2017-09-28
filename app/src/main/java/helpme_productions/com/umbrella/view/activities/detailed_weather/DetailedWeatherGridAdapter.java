@@ -28,20 +28,13 @@ class DetailedWeatherGridAdapter extends BaseAdapter{
         this.tempType = tempType;
     }
 
-    public DetailedWeatherGridAdapter(Context context, List<HourlyForecast> forecasts) {
-        this.context = context;
-        this.forecasts = forecasts;
-
-    }
-
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View gridView;
 
         if (convertView == null) {
-            gridView = new View(context);
-            gridView = inflater.inflate(R.layout.grid_items, null);
+            gridView = inflater.inflate(R.layout.grid_items,parent,false);
 
             TextView time = gridView.findViewById(R.id.tvGridTime);
             time.setText(forecasts.get(position).getFCTTIME().getHour());
@@ -57,7 +50,7 @@ class DetailedWeatherGridAdapter extends BaseAdapter{
 
 
           switch (forecasts.get(position).getCondition()){
-              case "clear":
+              case "Clear":
                   Glide.with(context).load(R.drawable.weather_sunny).into(imageView);
                   break;
               default:

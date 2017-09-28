@@ -1,7 +1,9 @@
 package helpme_productions.com.umbrella.view.activities.search_location;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -22,6 +24,10 @@ public class SearchLocation extends AppCompatActivity implements SearchLocatioCo
     Spinner tempChoice;
     @BindView(R.id.etSearchZipCodes)
     EditText zipCode;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+    private static final String TEMP_TYPE_KEY = "helpme_productions.com.umbrella.view.activities.search_location.TempType";
+    private static final String ZIP_CODE_KEY ="helpme_productions.com.umbrella.view.activities.search_location.ZipCode";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +35,14 @@ public class SearchLocation extends AppCompatActivity implements SearchLocatioCo
         ButterKnife.bind(this);
         setupDagger();
         presenter.addView(this);
-
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();
+        editor.apply();
+        String zip =preferences.getString(ZIP_CODE_KEY,"");
+        String tempType = preferences.getString(TEMP_TYPE_KEY,"f");
+        if(!zip.equals("") ){
+            continueFromLastSearch(zip,tempType);
+        }
 
     }
 
@@ -52,25 +65,41 @@ public class SearchLocation extends AppCompatActivity implements SearchLocatioCo
 
     public void searchTemp(View view) {
         Intent getTemps = new Intent(this, DetailedWeather.class);
-        if (zipCode.getText() !=null){
-            getTemps.putExtra("zip", zipCode.getText().toString());
+        if (zipCode.getText()!=null){
+            if(zipCode.getText().toString().length() ==5){
+                editor.putString(ZIP_CODE_KEY,zipCode.getText().toString());
+                editor.apply();
+                getTemps.putExtra("zip", zipCode.getText().toString());
+                switch (tempChoice.getSelectedItemPosition()){
+                    case 0:
+                        editor.putString(TEMP_TYPE_KEY,"f");
+                        editor.apply();
+                        getTemps.putExtra("temp","f");
+                        break;
+                    case 1:
+                        editor.putString(TEMP_TYPE_KEY,"c");
+                        editor.apply();
+                        getTemps.putExtra("temp", "c");
+                        break;
+                }
+
+                startActivity(getTemps);
+            }else{
+                showError("A Zip Code is 5 digits long.");
+            }
         }else {
             showError("You must supply a Zip code");
           //  zipCode.setBackgroundColor(getColor(R.color.colorAccent));
         }
-        switch (tempChoice.getSelectedItemPosition()){
-            case 0:
-                getTemps.putExtra("temp","f");
-                break;
-            case 1:
-                getTemps.putExtra("temp", "c");
-                break;
-        }
-        startActivity(getTemps);
+
     }
 
     @Override
     public void continueFromLastSearch(String zip, String tempType) {
+        Intent intent = new Intent(this, DetailedWeather.class);
+        intent.putExtra("zip",zip);
+        intent.putExtra("temp", tempType);
+        startActivity(intent);
 
     }
 }

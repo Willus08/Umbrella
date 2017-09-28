@@ -7,7 +7,7 @@ import helpme_productions.com.umbrella.BasePresenter;
 import helpme_productions.com.umbrella.BaseView;
 import helpme_productions.com.umbrella.model.FullWeather;
 
-public interface DetailedWeatherContract {
+interface DetailedWeatherContract {
     interface View extends BaseView{
         void setupUI(FullWeather fullWeather, String tempSeting);
 
