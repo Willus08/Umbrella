@@ -1,13 +1,12 @@
 package helpme_productions.com.umbrella.view.activities.detailed_weather;
 
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import helpme_productions.com.umbrella.data.RetrofitHelper;
+import helpme_productions.com.umbrella.data.remote.APIProvider;
 import helpme_productions.com.umbrella.model.FullWeather;
 import helpme_productions.com.umbrella.model.HourlyForecast;
 import retrofit2.Call;
@@ -16,6 +15,7 @@ import retrofit2.Response;
 public class DetailedWeatherPresenter implements DetailedWeatherContract.Presenter{
   private DetailedWeatherContract.View view;
 
+  private FullWeather weather;
     @Override
     public void addView(DetailedWeatherContract.View view) {
         this.view = view;
@@ -27,15 +27,13 @@ public class DetailedWeatherPresenter implements DetailedWeatherContract.Present
     }
 
     @Override
-    public void getWeather(Intent intent) {
-      String zip = intent.getStringExtra("zip");
-      final String tempType = intent.getStringExtra("temp");
-      retrofit2.Call<FullWeather> fullWeatherCall = RetrofitHelper.fullWeatherCall(zip);
+    public void getWeather(String zip) {
+      retrofit2.Call<FullWeather> fullWeatherCall = APIProvider.fullWeatherCall(zip);
       fullWeatherCall.enqueue(new retrofit2.Callback<FullWeather>() {
 
         @Override
         public void onResponse(@NonNull Call<FullWeather> call, @NonNull Response<FullWeather> response) {
-             view.setupUI(response.body(),tempType);
+           view.setupUI(response.body());
         }
 
         @Override

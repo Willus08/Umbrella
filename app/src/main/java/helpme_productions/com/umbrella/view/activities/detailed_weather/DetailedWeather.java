@@ -1,7 +1,10 @@
 package helpme_productions.com.umbrella.view.activities.detailed_weather;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -22,6 +25,7 @@ import helpme_productions.com.umbrella.R;
 import helpme_productions.com.umbrella.injection.detailed_weather.DaggerDetailedWeatherComponent;
 import helpme_productions.com.umbrella.model.FullWeather;
 import helpme_productions.com.umbrella.model.HourlyForecast;
+import helpme_productions.com.umbrella.view.activities.search_location.SearchLocation;
 
 public class DetailedWeather extends AppCompatActivity implements DetailedWeatherContract.View {
     @Inject DetailedWeatherPresenter presenter;
@@ -37,11 +41,14 @@ public class DetailedWeather extends AppCompatActivity implements DetailedWeathe
     @BindView(R.id.rvWeatherForecast)
     RecyclerView forecast;
 
+    SharedPreferences preferences;
     DetailedWeatherRecyclerAdapter adapter;
     DefaultItemAnimator animate;
     RecyclerView.LayoutManager layoutM;
+    String zip ="";
+    String tempType = "";
 
-
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +56,17 @@ public class DetailedWeather extends AppCompatActivity implements DetailedWeathe
         ButterKnife.bind(this);
         setupDagger();
         presenter.addView(this);
-        presenter.getWeather(getIntent());
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+   ;
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        zip =preferences.getString(this.getString(R.string.zip_key),"94043");
+        tempType = preferences.getString(this.getString(R.string.temp_type_key),"f");
+        presenter.getWeather(zip);
     }
 
     @Override
@@ -70,18 +87,18 @@ public class DetailedWeather extends AppCompatActivity implements DetailedWeathe
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public void setupUI(FullWeather fullWeather, String tempSetting) {
+    public void setupUI(FullWeather fullWeather) {
         List<HourlyForecast> forecasts = fullWeather.getHourlyForecast() ;
         String cityState = fullWeather.getLocation().getCity()+", "+fullWeather.getLocation().getState();
         int currentTemp;
-        if (tempSetting.equals("f")) {
+        if (tempType.equals("f")) {
             currentTemp = Integer.parseInt(forecasts.get(0).getTemp().getEnglish());
             temp.setText(forecasts.get(0).getTemp().getEnglish());
             if (currentTemp>60){
                 tempHolder.setBackgroundColor(getColor(R.color.highTemp));
             }else
                 tempHolder.setBackgroundColor(getColor(R.color.lowTemp));
-        }else if (tempSetting.equals("c")){
+        }else if (tempType.equals("c")){
             currentTemp = Integer.parseInt(forecasts.get(0).getTemp().getMetric());
             temp.setText(forecasts.get(0).getTemp().getMetric());
             if (currentTemp>16){
@@ -94,7 +111,7 @@ public class DetailedWeather extends AppCompatActivity implements DetailedWeathe
         weatherType.setText(forecasts.get(0).getCondition());
 
 
-        adapter = new DetailedWeatherRecyclerAdapter(presenter.compressHoursToDays(forecasts),tempSetting);
+        adapter = new DetailedWeatherRecyclerAdapter(presenter.compressHoursToDays(forecasts),tempType);
         layoutM = new LinearLayoutManager(this);
         animate = new DefaultItemAnimator();
 
@@ -104,6 +121,7 @@ public class DetailedWeather extends AppCompatActivity implements DetailedWeathe
     }
 
     public void changeLocation(View view) {
-        finish();
+        Intent intent = new Intent(this, SearchLocation.class);
+        startActivity(intent);
     }
 }

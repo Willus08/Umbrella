@@ -26,8 +26,6 @@ public class SearchLocation extends AppCompatActivity implements SearchLocatioCo
     EditText zipCode;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
-    private static final String TEMP_TYPE_KEY = "helpme_productions.com.umbrella.view.activities.search_location.TempType";
-    private static final String ZIP_CODE_KEY ="helpme_productions.com.umbrella.view.activities.search_location.ZipCode";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,11 +36,6 @@ public class SearchLocation extends AppCompatActivity implements SearchLocatioCo
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
         editor.apply();
-        String zip =preferences.getString(ZIP_CODE_KEY,"");
-        String tempType = preferences.getString(TEMP_TYPE_KEY,"f");
-        if(!zip.equals("") ){
-            continueFromLastSearch(zip,tempType);
-        }
 
     }
 
@@ -64,26 +57,22 @@ public class SearchLocation extends AppCompatActivity implements SearchLocatioCo
 
 
     public void searchTemp(View view) {
-        Intent getTemps = new Intent(this, DetailedWeather.class);
         if (zipCode.getText()!=null){
             if(zipCode.getText().toString().length() ==5){
-                editor.putString(ZIP_CODE_KEY,zipCode.getText().toString());
+                editor.putString(this.getString(R.string.zip_key),zipCode.getText().toString());
                 editor.apply();
-                getTemps.putExtra("zip", zipCode.getText().toString());
                 switch (tempChoice.getSelectedItemPosition()){
                     case 0:
-                        editor.putString(TEMP_TYPE_KEY,"f");
+                        editor.putString(this.getString(R.string.temp_type_key),"f");
                         editor.apply();
-                        getTemps.putExtra("temp","f");
                         break;
                     case 1:
-                        editor.putString(TEMP_TYPE_KEY,"c");
+                        editor.putString(this.getString(R.string.temp_type_key),"c");
                         editor.apply();
-                        getTemps.putExtra("temp", "c");
                         break;
                 }
-
-                startActivity(getTemps);
+                Intent intent = new Intent(this, DetailedWeather.class);
+                startActivity(intent);
             }else{
                 showError("A Zip Code is 5 digits long.");
             }
@@ -94,12 +83,4 @@ public class SearchLocation extends AppCompatActivity implements SearchLocatioCo
 
     }
 
-    @Override
-    public void continueFromLastSearch(String zip, String tempType) {
-        Intent intent = new Intent(this, DetailedWeather.class);
-        intent.putExtra("zip",zip);
-        intent.putExtra("temp", tempType);
-        startActivity(intent);
-
-    }
 }

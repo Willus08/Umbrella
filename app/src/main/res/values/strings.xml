@@ -6,6 +6,8 @@
     <string name="spinner_title">Temperature Type</string>
     <string name="change_location">Change Location</string>
     <string name="image_description">Weather Image</string>
+    <string name="temp_type_key"> helpme_productions.com.umbrella.view.activities.TempType</string>
+    <string name="zip_key">helpme_productions.com.umbrella.view.activities.ZipCode</string>
     <array name="temps">
         <item>Fahrenheit</item>
         <item>Celsius</item>

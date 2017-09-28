@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:background="@color/colorPrimaryLight"
     tools:context="helpme_productions.com.umbrella.view.activities.search_location.SearchLocation">
 
     <EditText
@@ -33,5 +34,6 @@
         android:onClick="searchTemp"
         android:layout_margin="20dp"
         android:textSize="20sp"/>
+
 
 </LinearLayout>
