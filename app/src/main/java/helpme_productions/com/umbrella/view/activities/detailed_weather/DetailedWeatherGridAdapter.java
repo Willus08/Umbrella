@@ -2,6 +2,7 @@ package helpme_productions.com.umbrella.view.activities.detailed_weather;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,9 @@ class DetailedWeatherGridAdapter extends BaseAdapter{
     private List<HourlyForecast> forecasts = new ArrayList<>();
     private String tempType;
     private int lowestTemp =100;// set initialy High so that the initialized value cant be the lowest;
-    private int lowestTempPos;
+    private static int lowestTempPos = 0;
     private int highestTemp = -100;// set initialy low so that the initialized value cant be the highest
-    private int highestTempPos;
+    private static int highestTempPos = 0;
 
     DetailedWeatherGridAdapter(Context context, List<HourlyForecast> forecasts, String tempType) {
         this.context = context;
@@ -92,17 +93,16 @@ class DetailedWeatherGridAdapter extends BaseAdapter{
               default:
                   Glide.with(context).load(R.drawable.weather_partlycloudy).into(imageView);
           }
-
-//            if (position == lowestTempPos){
-//                temp.setTextColor(Color.BLUE);
-//                imageView.setDrawingCacheBackgroundColor(Color.BLUE);
-//                time.setTextColor(Color.BLUE);
-//            }
-//            if (position == highestTempPos){
-//                temp.setTextColor(Color.YELLOW);
-//                imageView.setDrawingCacheBackgroundColor(Color.YELLOW);
-//                time.setTextColor(Color.YELLOW);
-//            }
+            if (position == lowestTempPos){
+                temp.setTextColor(Color.BLUE);
+                imageView.setColorFilter(Color.BLUE);
+                time.setTextColor(Color.BLUE);
+            }
+            if (position == highestTempPos){
+                temp.setTextColor(Color.YELLOW);
+                imageView.setColorFilter(Color.YELLOW);
+                time.setTextColor(Color.YELLOW);
+            }
         } else {
             gridView = convertView;
         }
@@ -126,4 +126,15 @@ class DetailedWeatherGridAdapter extends BaseAdapter{
     public long getItemId(int position) {
         return 0;
     }
+
+    public int getHighestTempPos(){
+        return highestTempPos;
+    }
+
+    public int getLowestTempPos(){
+
+        return lowestTempPos;
+
+    }
+
 }

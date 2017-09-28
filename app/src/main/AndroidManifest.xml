@@ -11,15 +11,15 @@
         android:roundIcon="@drawable/umbrella_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activities.detailed_weather.DetailedWeather">
+        <activity android:name=".view.activities.detailed_weather.DetailedWeather"
+            android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activities.search_location.SearchLocation"
-            android:theme="@style/NoActionBar"/>
+        <activity android:name=".view.activities.search_location.SearchLocation" />
     </application>
 
 </manifest>

@@ -1,6 +1,8 @@
 package helpme_productions.com.umbrella.view.activities.detailed_weather;
 
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,11 +31,23 @@ class DetailedWeatherRecyclerAdapter extends RecyclerView.Adapter<DetailedWeathe
         return new ViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         List<HourlyForecast> currentDay = forecasts.get(position);
         holder.day.setText(currentDay.get(0).getFCTTIME().getWeekdayName());
-        holder.forcastHolder.setAdapter(new DetailedWeatherGridAdapter(holder.itemView.getContext(),currentDay,tempType));
+        DetailedWeatherGridAdapter adapter = new DetailedWeatherGridAdapter(holder.itemView.getContext(),currentDay,tempType);
+        holder.forcastHolder.setAdapter(adapter);
+        int hieght = 400;
+        if(currentDay.size() >3){
+            hieght *= (currentDay.size()/3) +1;
+        }
+        ViewGroup.LayoutParams params = holder.forcastHolder.getLayoutParams();
+        params.height = hieght;
+        holder.forcastHolder.setLayoutParams(params);
+
+
+
 
     }
 
