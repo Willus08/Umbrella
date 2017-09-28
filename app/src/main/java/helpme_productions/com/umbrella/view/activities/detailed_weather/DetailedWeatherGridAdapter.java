@@ -21,6 +21,10 @@ class DetailedWeatherGridAdapter extends BaseAdapter{
     private Context context;
     private List<HourlyForecast> forecasts = new ArrayList<>();
     private String tempType;
+    private int lowestTemp =100;// set initialy High so that the initialized value cant be the lowest;
+    private int lowestTempPos;
+    private int highestTemp = -100;// set initialy low so that the initialized value cant be the highest
+    private int highestTempPos;
 
     DetailedWeatherGridAdapter(Context context, List<HourlyForecast> forecasts, String tempType) {
         this.context = context;
@@ -49,11 +53,32 @@ class DetailedWeatherGridAdapter extends BaseAdapter{
                 timeText = timeInt +":00 AM";
             }
             time.setText(timeText);
+            int currentTemp;
             TextView temp = gridView.findViewById(R.id.tvGridTemp);
             if(tempType.equals("f")){
-                temp.setText(forecasts.get(position).getTemp().getEnglish());
+                currentTemp = Integer.parseInt(forecasts.get(position).getTemp().getEnglish());
+                if(currentTemp > highestTemp){
+                    highestTemp  = currentTemp;
+                    highestTempPos = position;
+                }
+                if(currentTemp < lowestTemp){
+                    lowestTemp = currentTemp;
+                    lowestTempPos = position;
+                }
+                String tempText = currentTemp + " F";
+                temp.setText(tempText);
             }else {
-                temp.setText(forecasts.get(position).getTemp().getMetric());
+                currentTemp = Integer.parseInt(forecasts.get(position).getTemp().getMetric());
+                if(currentTemp > highestTemp){
+                    highestTemp  = currentTemp;
+                    highestTempPos = position;
+                }
+                if(currentTemp < lowestTemp){
+                    lowestTemp = currentTemp;
+                    lowestTempPos = position;
+                }
+                String tempText = currentTemp + " C";
+                temp.setText(tempText);
             }
 
             ImageView imageView = gridView.findViewById(R.id.ivGridImage);
@@ -68,11 +93,23 @@ class DetailedWeatherGridAdapter extends BaseAdapter{
                   Glide.with(context).load(R.drawable.weather_partlycloudy).into(imageView);
           }
 
+//            if (position == lowestTempPos){
+//                temp.setTextColor(Color.BLUE);
+//                imageView.setDrawingCacheBackgroundColor(Color.BLUE);
+//                time.setTextColor(Color.BLUE);
+//            }
+//            if (position == highestTempPos){
+//                temp.setTextColor(Color.YELLOW);
+//                imageView.setDrawingCacheBackgroundColor(Color.YELLOW);
+//                time.setTextColor(Color.YELLOW);
+//            }
         } else {
             gridView = convertView;
         }
 
+
         return gridView;
+
     }
 
     @Override
