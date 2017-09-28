@@ -23,7 +23,6 @@ public class RetrofitHelper {
     public static Call<FullWeather> fullWeatherCall(String zip){
         Retrofit retrofit = create();
         Services services = retrofit.create(Services.class);
-       // return services.getFullWeather(API_KEY,SEARCH_TEMP,zip);
         return services.getFullWeather(API_KEY,SEARCH_TEMP, SEARCH_LOCATION,Integer.parseInt(zip));
     }
 
