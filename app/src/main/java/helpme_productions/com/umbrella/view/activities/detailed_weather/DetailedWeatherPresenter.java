@@ -39,7 +39,7 @@ public class DetailedWeatherPresenter implements DetailedWeatherContract.Present
         }
 
         @Override
-        public void onFailure(@NonNull Call<FullWeather> call, Throwable t) {
+        public void onFailure(@NonNull Call<FullWeather> call, @NonNull Throwable t) {
           view.showError(t.toString());
         }
 
