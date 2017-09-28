@@ -36,6 +36,7 @@ public class SearchLocation extends AppCompatActivity implements SearchLocatioCo
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
         editor.apply();
+        zipCode.setText(preferences.getString(this.getString(R.string.zip_key),"94043"));
 
     }
 

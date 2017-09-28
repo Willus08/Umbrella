@@ -20,7 +20,7 @@ class DetailedWeatherRecyclerAdapter extends RecyclerView.Adapter<DetailedWeathe
     private List<List<HourlyForecast>> forecasts = new ArrayList<>();
     private String tempType;
 
-    public DetailedWeatherRecyclerAdapter(List<List<HourlyForecast>> forecasts, String tempType) {
+    DetailedWeatherRecyclerAdapter(List<List<HourlyForecast>> forecasts, String tempType) {
         this.forecasts = forecasts;
         this.tempType = tempType;
     }
