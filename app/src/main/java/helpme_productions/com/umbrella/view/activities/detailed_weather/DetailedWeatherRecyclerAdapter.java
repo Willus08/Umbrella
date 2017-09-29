@@ -74,15 +74,15 @@ class DetailedWeatherRecyclerAdapter extends RecyclerView.Adapter<DetailedWeathe
             return;
         }
 
-        int totalHeight = 0;
+        int totalHeight;
         int items = gridViewAdapter.getCount();
-        int rows = 0;
+        int rows;
 
         View listItem = gridViewAdapter.getView(0, null, gridView);
         listItem.measure(0, 0);
         totalHeight = listItem.getMeasuredHeight();
 
-        float x = 1;
+        float x;
         if( items > 3 ){
             x = items/(3);
             rows = (int) (x + 1);
