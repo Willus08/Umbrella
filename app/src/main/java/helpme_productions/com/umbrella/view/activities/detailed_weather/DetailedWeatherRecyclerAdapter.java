@@ -72,7 +72,7 @@ class DetailedWeatherRecyclerAdapter extends RecyclerView.Adapter<DetailedWeathe
 
         int hieght = 400;
         if(currentDay.size() >3){
-            hieght *= (((currentDay.size()-1)/3)+1);
+            hieght *= ((currentDay.size()-1)/3)+1;
         }
         ViewGroup.LayoutParams params = holder.forcastHolder.getLayoutParams();
         params.height = hieght;
