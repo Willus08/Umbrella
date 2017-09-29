@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ class DetailedWeatherRecyclerAdapter extends RecyclerView.Adapter<DetailedWeathe
             }
         }
         holder.day.setText(currentDay.get(0).getFCTTIME().getWeekdayName());
+
         DetailedWeatherGridAdapter adapter = new DetailedWeatherGridAdapter(
                 holder.itemView.getContext(),
                 currentDay,
@@ -55,16 +57,7 @@ class DetailedWeatherRecyclerAdapter extends RecyclerView.Adapter<DetailedWeathe
                 lowest);
 
         holder.forcastHolder.setAdapter(adapter);
-        int hieght = 400;
-        if(currentDay.size() >3){
-            hieght *= (currentDay.size()/3) +1;
-        }
-        ViewGroup.LayoutParams params = holder.forcastHolder.getLayoutParams();
-        params.height = hieght;
-        holder.forcastHolder.setLayoutParams(params);
-
-
-
+        setDynamicHeight(holder.forcastHolder);
 
     }
 
@@ -73,6 +66,33 @@ class DetailedWeatherRecyclerAdapter extends RecyclerView.Adapter<DetailedWeathe
         return forecasts.size();
     }
 
+
+    private void setDynamicHeight(GridView gridView) {
+        ListAdapter gridViewAdapter = gridView.getAdapter();
+        if (gridViewAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+        int items = gridViewAdapter.getCount();
+        int rows = 0;
+
+        View listItem = gridViewAdapter.getView(0, null, gridView);
+        listItem.measure(0, 0);
+        totalHeight = listItem.getMeasuredHeight();
+
+        float x = 1;
+        if( items > 3 ){
+            x = items/(3);
+            rows = (int) (x + 1);
+            totalHeight *= rows;
+        }
+
+        ViewGroup.LayoutParams params = gridView.getLayoutParams();
+        params.height = totalHeight;
+        gridView.setLayoutParams(params);
+    }
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView day;
         GridView forcastHolder;
