@@ -1,6 +1,5 @@
 package helpme_productions.com.umbrella.view.activities.search_location;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -16,7 +15,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import helpme_productions.com.umbrella.R;
 import helpme_productions.com.umbrella.injection.search_location.DaggerSearchLocationComponent;
-import helpme_productions.com.umbrella.view.activities.detailed_weather.DetailedWeather;
 
 public class SearchLocation extends AppCompatActivity implements SearchLocatioContract.View{
     @Inject SearchLocationPresenter presenter;
@@ -72,8 +70,9 @@ public class SearchLocation extends AppCompatActivity implements SearchLocatioCo
                         editor.apply();
                         break;
                 }
-                Intent intent = new Intent(this, DetailedWeather.class);
-                startActivity(intent);
+                finish();
+//                Intent intent = new Intent(this, DetailedWeather.class);
+//                startActivity(intent);
             }else{
                 showError("A Zip Code is 5 digits long.");
             }

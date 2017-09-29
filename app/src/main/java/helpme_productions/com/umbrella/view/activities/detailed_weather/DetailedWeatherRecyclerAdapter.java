@@ -19,6 +19,7 @@ import helpme_productions.com.umbrella.model.HourlyForecast;
 class DetailedWeatherRecyclerAdapter extends RecyclerView.Adapter<DetailedWeatherRecyclerAdapter.ViewHolder> {
     private List<List<HourlyForecast>> forecasts = new ArrayList<>();
     private String tempType;
+    private String dayText;
 
     DetailedWeatherRecyclerAdapter(List<List<HourlyForecast>> forecasts, String tempType) {
         this.forecasts = forecasts;
@@ -47,7 +48,6 @@ class DetailedWeatherRecyclerAdapter extends RecyclerView.Adapter<DetailedWeathe
             }
         }
 
-        String dayText;
         switch (position){
             case 0:
                 dayText = "Today";
@@ -56,7 +56,9 @@ class DetailedWeatherRecyclerAdapter extends RecyclerView.Adapter<DetailedWeathe
                 dayText = "Tomorrow";
                 break;
             default:
+                if (currentDay.size()>0){
                 dayText =currentDay.get(0).getFCTTIME().getWeekdayName();
+                }
         }
         holder.day.setText(dayText);
 
@@ -68,16 +70,13 @@ class DetailedWeatherRecyclerAdapter extends RecyclerView.Adapter<DetailedWeathe
                 lowest);
 
         holder.forcastHolder.setAdapter(adapter);
-
-
         int hieght = 400;
         if(currentDay.size() >3){
-            hieght *= ((currentDay.size()-1)/3)+1;
+            hieght *= ((currentDay.size()-1)/3) +1;
         }
         ViewGroup.LayoutParams params = holder.forcastHolder.getLayoutParams();
         params.height = hieght;
         holder.forcastHolder.setLayoutParams(params);
-
 
     }
 
@@ -85,7 +84,6 @@ class DetailedWeatherRecyclerAdapter extends RecyclerView.Adapter<DetailedWeathe
     public int getItemCount() {
         return forecasts.size();
     }
-
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView day;
